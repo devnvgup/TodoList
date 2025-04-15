@@ -1,8 +1,16 @@
 // redux/actions.js
-export const handleHideSidebar = () => ({
+export const handleHideSideBar = () => ({
   type: "HIDE_SIDEBAR",
 });
 
-export const handleOpenSidebar = () => ({
+export const handleOpenSideBar = () => ({
   type: "OPEN_SIDEBAR",
+});
+
+export const handleBlockSideBar = () => ({
+  type: "BLOCK_SIDEBAR",
+});
+
+export const handleRemoveBlockSideBar = () => ({
+  type: "REMOVE_BLOCK_SIDEBAR",
 });
