@@ -1,11 +1,15 @@
 import SidebarHeader from "./SidebarHeader";
 import SidebarContent from "./SidebarContent";
 
-function SideBar() {
+interface SidebarProps {
+  width: number;
+}
+
+function SideBar({ width }: SidebarProps) {
   return (
     <div className="flex flex-col">
       <div>
-        <SidebarHeader />
+        <SidebarHeader width={width} />
       </div>
       <div>
         <SidebarContent />

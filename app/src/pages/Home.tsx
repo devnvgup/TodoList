@@ -7,10 +7,12 @@ import {
   handleHideSideBar,
   handleRemoveBlockSideBar,
 } from "../redux/action.js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppSelector } from "../hook/useAppSelector";
 
 function Home() {
+  const [width, setWidth] = useState(210);
+  const isResizing = useRef(false);
   const hideSideBar = useAppSelector(
     (state) => state.sideBarreducers.hideSideBar
   );
@@ -19,6 +21,34 @@ function Home() {
   );
   const dispatch = useDispatch();
   const [showTriggerIcon, setShowTriggerIcon] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing.current) return;
+      const newWidth = e.clientX;
+      if (newWidth >= 210 && newWidth <= 420) {
+        setWidth(newWidth);
+      }
+    };
+
+    const handleMouseUp = () => {
+      isResizing.current = false;
+      document.body.style.cursor = "default";
+    };
+
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, []);
+
+  const handleMouseDown = () => {
+    isResizing.current = true;
+    document.body.style.cursor = "col-resize";
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,13 +83,18 @@ function Home() {
   return (
     <div className="flex flex-row h-screen">
       <div
+        style={{ width }}
         className={`
-      fixed top-0 left-0 h-full w-[210px] bg-[#262626]
+      fixed top-0 left-0 h-full bg-[#262626]
       transform transition-transform duration-300
       ${hideSideBar ? "-translate-x-full" : "translate-x-0"}
     `}
       >
-        <SideBar />
+        <SideBar width={width} />
+        <div
+          onMouseDown={handleMouseDown}
+          className="-z-10 absolute top-0 right-0 w-1 h-full cursor-col-resize bg-transparent hover:bg-gray-500 transition-colors"
+        ></div>
       </div>
 
       <div

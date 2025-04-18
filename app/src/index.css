@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+.font-system {
+  font-family: apple-system, system-ui, "Segoe UI", Roboto, Noto, "Oxygen-Sans",
+    Ubuntu;
+}

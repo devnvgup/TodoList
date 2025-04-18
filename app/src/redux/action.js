@@ -14,3 +14,11 @@ export const handleBlockSideBar = () => ({
 export const handleRemoveBlockSideBar = () => ({
   type: "REMOVE_BLOCK_SIDEBAR",
 });
+
+export const handleOpenPrPopup = () => ({
+  type: "OPEN_DETAIL_POPUP",
+});
+
+export const handleClosePrPopup = () => ({
+  type: "CLOSE_DETAIL_POPUP",
+});
