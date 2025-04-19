@@ -101,6 +101,7 @@ function Home() {
         className={`transition-all duration-300 ${
           hideSideBar ? "pl-0" : "pl-[210px]"
         } bg-[#1E1E1E] h-full flex-1`}
+        style={{ paddingLeft: hideSideBar ? 0 : width }}
       >
         {showTriggerIcon && (
           <div className="p-5">

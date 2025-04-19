@@ -22,3 +22,13 @@ export const handleOpenPrPopup = () => ({
 export const handleClosePrPopup = () => ({
   type: "CLOSE_DETAIL_POPUP",
 });
+
+export const handleAddProject = (payload) => ({
+  type: "ADD_PROJECT",
+  payload,
+});
+
+export const handleDeleteProject = (payload) => ({
+  type: "DELETE_PROJECT",
+  payload,
+});

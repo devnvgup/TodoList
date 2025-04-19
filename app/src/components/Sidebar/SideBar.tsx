@@ -12,7 +12,7 @@ function SideBar({ width }: SidebarProps) {
         <SidebarHeader width={width} />
       </div>
       <div>
-        <SidebarContent />
+        <SidebarContent width={width} />
       </div>
     </div>
   );

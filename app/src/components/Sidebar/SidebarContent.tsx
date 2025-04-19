@@ -1,8 +1,18 @@
 import React from "react";
 import MyProject from "../Content/MyProject";
+import ProjectList from "../Content/ProjectList";
 
-function SidebarContent() {
-  return <MyProject />;
+interface SidebarContentProps {
+  width: number;
+}
+
+function SidebarContent({ width }: SidebarContentProps) {
+  return (
+    <>
+      <MyProject />
+      <ProjectList width={width} />
+    </>
+  );
 }
 
 export default SidebarContent;

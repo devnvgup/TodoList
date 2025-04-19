@@ -4,3 +4,11 @@
   font-family: apple-system, system-ui, "Segoe UI", Roboto, Noto, "Oxygen-Sans",
     Ubuntu;
 }
+.my-disabled {
+  cursor: not-allowed; /* Hiệu ứng dấu X hoặc biểu tượng bị khoá */
+  opacity: 0.5; /* Làm mờ nếu cần */
+}
+
+.selected-pr {
+  background-color: #472525;
+}
