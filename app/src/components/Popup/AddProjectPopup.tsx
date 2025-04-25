@@ -9,7 +9,7 @@ interface AddProjectPopupProps {
 }
 
 function AddProjectPopup({ openPopup, setOpenPopup }: AddProjectPopupProps) {
-  const popupRef = useRef(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
 
   const handleOpenDetailPrPopup = () => {

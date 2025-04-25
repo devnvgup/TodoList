@@ -12,6 +12,7 @@ import { useAppSelector } from "../hook/useAppSelector";
 
 function Home() {
   const [width, setWidth] = useState(210);
+  const contentRef = useRef<HTMLDivElement>(null);
   const isResizing = useRef(false);
   const hideSideBar = useAppSelector(
     (state) => state.sideBarreducers.hideSideBar
@@ -27,6 +28,12 @@ function Home() {
       if (!isResizing.current) return;
       const newWidth = e.clientX;
       if (newWidth >= 210 && newWidth <= 420) {
+        requestAnimationFrame(() => {
+          if (contentRef.current) {
+            contentRef.current.style.paddingLeft = `${newWidth}px`;
+          }
+        });
+
         setWidth(newWidth);
       }
     };
@@ -70,8 +77,18 @@ function Home() {
   useEffect(() => {
     if (hideSideBar) {
       const timeout = setTimeout(() => setShowTriggerIcon(true), 100);
+      requestAnimationFrame(() => {
+        if (contentRef.current) {
+          contentRef.current.style.paddingLeft = `0px`;
+        }
+      });
       return () => clearTimeout(timeout);
     } else {
+      requestAnimationFrame(() => {
+        if (contentRef.current) {
+          contentRef.current.style.paddingLeft = `${width}px`;
+        }
+      });
       setShowTriggerIcon(false);
     }
   }, [hideSideBar]);
@@ -81,7 +98,7 @@ function Home() {
     dispatch(handleRemoveBlockSideBar());
   };
   return (
-    <div className="flex flex-row h-screen">
+    <div className="flex flex-row min-h-screen">
       <div
         style={{ width }}
         className={`
@@ -98,10 +115,10 @@ function Home() {
       </div>
 
       <div
-        className={`transition-all duration-300 ${
+        ref={contentRef}
+        className={` transition-all duration-300 ${
           hideSideBar ? "pl-0" : "pl-[210px]"
-        } bg-[#1E1E1E] h-full flex-1`}
-        style={{ paddingLeft: hideSideBar ? 0 : width }}
+        } bg-[#1E1E1E] min-h-screen flex-1`}
       >
         {showTriggerIcon && (
           <div className="p-5">

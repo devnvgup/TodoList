@@ -1,9 +1,27 @@
-import { ArrowDown, Plus } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 import { useState } from "react";
 import AddProjectPopup from "../Popup/AddProjectPopup";
+import { useAppSelector } from "../../hook/useAppSelector";
+import { useDispatch } from "react-redux";
+import {
+  handleHideProjectList,
+  handleShowProjectList,
+} from "../../redux/action.ts";
 
 function MyProject() {
   const [openPopup, setOpenPopup] = useState(false);
+  const dispatch = useDispatch();
+
+  const isShowProjectList = useAppSelector(
+    (state) => state.todoReducer.isShowProjectList
+  );
+  const handleShowHidePr = () => {
+    if (isShowProjectList) {
+      dispatch(handleHideProjectList());
+    } else {
+      dispatch(handleShowProjectList());
+    }
+  };
 
   return (
     <>
@@ -20,7 +38,12 @@ function MyProject() {
               setOpenPopup={setOpenPopup}
             />
           </div>
-          <ArrowDown className="text-[white] opacity-50 w-5" />
+          <ChevronDown
+            onClick={handleShowHidePr}
+            className={`text-[white] opacity-50 w-5 transition-transform duration-300 ${
+              isShowProjectList ? "rotate-0" : "-rotate-90"
+            }`}
+          />
         </div>
       </div>
     </>

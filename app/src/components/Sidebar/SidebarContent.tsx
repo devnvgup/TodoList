@@ -1,4 +1,3 @@
-import React from "react";
 import MyProject from "../Content/MyProject";
 import ProjectList from "../Content/ProjectList";
 

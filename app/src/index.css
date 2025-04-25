@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  @apply overflow-x-hidden;
+  /* @apply overflow-y-hidden; */
+}
+
 .font-system {
   font-family: apple-system, system-ui, "Segoe UI", Roboto, Noto, "Oxygen-Sans",
     Ubuntu;
