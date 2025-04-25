@@ -5,7 +5,6 @@ import {
   PointerSensor,
   useSensor,
   useSensors,
-  DragOverlay,
   DragStartEvent,
   DragEndEvent,
 } from "@dnd-kit/core";
@@ -51,16 +50,17 @@ function ListTask() {
   const sensors = useSensors(useSensor(PointerSensor));
 
   const [activeTask, setActiveTask] = useState<Tasks>();
-  const [editId, setEditId] = useState();
+  const [editId, setEditId] = useState<string>();
 
-  useEffect(() => {
-    if (!editId) return;
-    const oldIndex = tasks.findIndex((t) => t.id === editId);
-    setTasks(arrayMove(tasks, oldIndex, oldIndex - 1));
-  }, [editId]);
+  // useEffect(() => {
+  //   if (!editId) return;
+  //   const oldIndex = tasks.findIndex((t) => t.id === editId);
+  //   setTasks(arrayMove(tasks, oldIndex, oldIndex - 1));
+  // }, [editId]);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    if(editId == active.id) return
     if (active.id !== over?.id) {
       const oldIndex = tasks.findIndex((t) => t.id === active.id);
       const newIndex = tasks.findIndex((t) => t.id === over?.id);
@@ -82,7 +82,7 @@ function ListTask() {
     );
   };
 
-  const handleGetId = (id: any) => {
+  const handleGetId = (id: string) => {
     setEditId(id);
   };
 
@@ -93,20 +93,22 @@ function ListTask() {
       collisionDetection={closestCenter}
       onDragEnd={handleDragEnd}
     >
-      <SortableContext
-        items={tasks.map((item) => item.id)}
-        strategy={verticalListSortingStrategy}
-      >
+    
         <div className="flex flex-col">
           {console.log("tasks:", tasks, "editId:", editId)}
           {tasks.map((item) =>
             editId != item.id ? (
+              <SortableContext
+              items={tasks}
+              strategy={verticalListSortingStrategy}
+            >
               <SortableTodoItem
                 key={item.id}
                 task={item}
                 handleGetId={handleGetId}
                 toggleTask={toggleTask}
               />
+               </SortableContext>
             ) : (
               <FormAddTodo
                 key={item.id}
@@ -117,7 +119,7 @@ function ListTask() {
             )
           )}
         </div>
-      </SortableContext>
+
 
       {/* <DragOverlay>
         {activeTask && (
